@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.framestudy.spring_mybatis.pojos.Pager;
 import org.framestudy.spring_mybatis.usermag.beans.UserInfo;
 import org.framestudy.spring_mybatis.usermag.service.IUserService;
 import org.junit.Assert;
@@ -24,7 +25,35 @@ public class TestUserService {
 	@Resource
 	private IUserService userInfoServiceImpl;
 	
-	@Test
+	
+	/**
+	 * 测试分页
+	 */
+	@Ignore
+	public void testGetUserListByMapToPager(){
+		int page = 2;
+		int rows = 5;
+		
+		String userName = "小";
+		String loginName = "a";
+		int index = (page - 1) * rows;
+		Map map = new HashMap();
+		map.put("page", page);
+		map.put("index", index);
+		map.put("rows", rows);
+		map.put("age", 25);
+		
+		
+		
+		map.put("userName", userName);
+		map.put("loginName", loginName);
+		
+		Pager pager = userInfoServiceImpl.getUserListByMapToPager(map);
+		System.out.println(pager);
+	}
+	
+	
+	@Ignore
 	public void testBatchDeleteUserInfo(){
 		List<UserInfo> users = new ArrayList<UserInfo>();
 		UserInfo user = new UserInfo();
@@ -78,9 +107,9 @@ public class TestUserService {
 		
 	}
 	
-	@Ignore
+	@Test
 	public void testLogin(){
-		String name = "a";
+		String name = "a3";
 		String pwd = "123456";
 		UserInfo user = userInfoServiceImpl.getUserByLoginNameAndPwd(name,pwd);
 		Assert.assertNotNull(user);

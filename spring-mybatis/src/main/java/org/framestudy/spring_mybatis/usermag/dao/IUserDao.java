@@ -8,7 +8,24 @@ import org.framestudy.spring_mybatis.usermag.beans.UserInfo;
 public interface IUserDao {
 	
 	
+	/**
+	 * 统计满足条件的总条数
+	 * @param map
+	 * @return
+	 */
+	public int countUserListByMapToPager(Map map);
+	/**
+	 * 查询满足条件的所有数据
+	 * @param map
+	 * @return
+	 */
+	public List<?> getUserListByMapToPager(Map map);
 	
+	/**
+	 * 批量删除
+	 * @param user
+	 * @return
+	 */
 	public int batchDeleteUserInfo(List<UserInfo> user);
 	
 	/**

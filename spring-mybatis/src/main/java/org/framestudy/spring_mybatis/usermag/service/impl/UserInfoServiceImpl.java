@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.framestudy.spring_mybatis.pojos.Pager;
 import org.framestudy.spring_mybatis.usermag.beans.UserInfo;
 import org.framestudy.spring_mybatis.usermag.dao.IUserDao;
 import org.framestudy.spring_mybatis.usermag.service.IUserService;
@@ -55,6 +56,16 @@ public class UserInfoServiceImpl implements IUserService {
 	public int batchDeleteUserInfo(List<UserInfo> user) {
 		// TODO Auto-generated method stub
 		return userDaoImpl.batchDeleteUserInfo(user);
+	}
+
+	@Override
+	public Pager getUserListByMapToPager(Map map) {
+		// TODO Auto-generated method stub
+		int totalRows = userDaoImpl.countUserListByMapToPager(map);
+		List<?> datas = userDaoImpl.getUserListByMapToPager(map);
+		int page = (int) map.get("page");
+		int rows = (int) map.get("rows");
+		return new Pager(page,rows,totalRows,datas);
 	}
 
 }

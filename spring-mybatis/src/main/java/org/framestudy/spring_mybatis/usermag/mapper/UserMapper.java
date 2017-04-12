@@ -8,7 +8,18 @@ import org.framestudy.spring_mybatis.usermag.beans.UserInfo;
 
 public interface UserMapper {
 
-	
+	/**
+	 * 统计满足条件的总条数
+	 * @param map
+	 * @return
+	 */
+	public int countUserListByMapToPager(@Param("map")Map map);
+	/**
+	 * 查询满足条件的所有数据
+	 * @param map
+	 * @return
+	 */
+	public List<?> getUserListByMapToPager(@Param("map")Map map);
 	
 	/**
 	 * 批量删除用户

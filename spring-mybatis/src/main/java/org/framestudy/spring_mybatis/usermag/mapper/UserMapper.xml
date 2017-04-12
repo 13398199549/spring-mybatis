@@ -38,18 +38,26 @@
 		</foreach>
 	</insert>
 
-	
-
-
-
-
-
-
-
-
 	<update id="updateUserInfo" parameterType="UserInfo">
-		update t_user set user_name = #{u.userName},password = #{u.pwd},age=#{u.age} where id = #{u.id}
-	</update>
+<!-- 		update t_user set user_name = #{u.userName},password = #{u.pwd},age=#{u.age} where id = #{u.id}
+ -->	
+ 	update t_user 
+ 	<set>
+ 		<if test="u.userName != null">
+ 			user_name = #{u.userName},
+ 		</if>
+ 		<if test="u.pwd != null">
+ 			password = #{u.pwd},
+ 		</if>
+ 		<if test="u.age != null">
+ 			age=#{u.age},
+ 		</if>
+ 	</set>
+ 
+ 	<where>
+ 		id = #{u.id}
+ 	</where>
+ </update>
 
 	<delete id="deleteUserInfo">
 		delete from t_user where id = #{id}
@@ -62,12 +70,79 @@
 		</foreach>
 	</delete>
 
+	<select id="countUserListByMapToPager" resultType="int">
+		select count(id) from t_user 
+		<include refid="commonSql"></include>
+	</select>
+
+	
+	<select id="getUserListByMapToPager" resultMap="userMap">
+	select * from t_user 
+		<include refid="commonSql"></include>
+		<!-- limit 后第一个参数是数据库的起始位置，
+		第二个参数每页需要显示的行数 -->
+		<!-- order by 必须要定义在limit之前 -->
+		order by id desc limit #{map.index},#{map.rows};
+	</select>
+
+
+	<sql id="commonSql">
+		<!-- where标签出现的地方，会自动添加一个where字符串
+		并且该标签会自动忽略紧随其后的and或者or -->
+	<!-- <where>
+			<if test="map.userName != null">
+				and user_name like CONCAT(#{map.userName},'%')
+			</if>
+			<if test="map.loginName != null">
+				and login_name like CONCAT(#{map.loginName},'%') 
+			</if>
+		</where> -->
+		
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="map.userName != null">
+				and user_name like CONCAT(#{map.userName},'%')
+			</if>
+			<if test="map.loginName != null">
+				and login_name like CONCAT(#{map.loginName},'%')
+			</if>
+			
+			<if test="map.age != null">
+			
+			<!-- <![CDATA[]]> 配置文件中的静态语句块，
+			它的作用是讲SQL语句中<符号，定义为一个普通的字符串
+			将它不再作为标签的开始与结束标记 -->
+			
+				<![CDATA[
+					and age < #{map.age}
+			]]>
+				
+			</if>
+		</trim>
+	</sql>
+
 	<select id="getUserInfoById" resultMap="userMap">
 		select * from t_user where id = #{id}
 	</select>
 	
 	<select id="getUserByLoginNameAndPwd" resultMap="userMap">
-		select user_name from t_user where login_name = #{loginName} and password = #{pwd}
+		<!-- select user_name from t_user where login_name = #{loginName} and password = #{pwd}
+	 -->
+	 
+	 	<!-- switch case default 在mybatis中的用法 -->
+		select user_name from t_user 
+		<where>
+			<choose>
+				<when test="loginName != null">
+					and login_name = #{loginName}
+				</when>
+				<when test="pwd != null">
+					and password = #{pwd}
+				</when>
+				<otherwise>
+					1=1
+				</otherwise>
+			</choose>
+		</where>
 	</select>
 
 	<!-- map中取值，依旧还是采用#或者$,只是取值是采用：map.键的方式 -->

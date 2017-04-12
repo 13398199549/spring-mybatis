@@ -58,4 +58,16 @@ public class UserDaoImpl implements IUserDao {
 		return um.batchDeleteUserInfo(user);
 	}
 
+	@Override
+	public int countUserListByMapToPager(Map map) {
+		// TODO Auto-generated method stub
+		return um.countUserListByMapToPager(map);
+	}
+
+	@Override
+	public List<?> getUserListByMapToPager(Map map) {
+		// TODO Auto-generated method stub
+		return um.getUserListByMapToPager(map);
+	}
+
 }

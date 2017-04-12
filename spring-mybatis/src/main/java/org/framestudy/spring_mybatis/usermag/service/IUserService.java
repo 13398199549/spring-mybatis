@@ -3,10 +3,21 @@ package org.framestudy.spring_mybatis.usermag.service;
 import java.util.List;
 import java.util.Map;
 
+import org.framestudy.spring_mybatis.pojos.Pager;
 import org.framestudy.spring_mybatis.usermag.beans.UserInfo;
 
 public interface IUserService {
 	
+	
+	
+	
+	
+	/**
+	 * 根据多参数完成分页查询
+	 * @param map
+	 * @return
+	 */
+	public Pager getUserListByMapToPager(Map map);
 	
 	/**
 	 * 批量删除用户
