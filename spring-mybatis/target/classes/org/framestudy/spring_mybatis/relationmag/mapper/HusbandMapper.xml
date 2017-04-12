@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.framestudy.spring_mybatis.relationmag.mapper.HusbandMapper">
+	<resultMap type="Husband" id="husMap">
+		<id property="id" column="hId" javaType="java.lang.Long"/>
+		<result property="name" column="hName" javaType="java.lang.String"/>
+		<result property="wife.id" column="wId" javaType="java.lang.Long"/>
+		<result property="wife.name" column="wName" javaType="java.lang.String"/>
+	</resultMap>
+
+	<insert id="marry">
+		insert into t_hus (hus_name) values (#{hus.name});
+		
+		insert into t_wife (wife_name,fk_hus_id) values (#{hus.wife.name},(select id 
+		from t_hus where hus_name = #{hus.name}))
+	</insert>
+	
+	<select id="getHusbandWithWifeByHusbandId" resultMap="husMap">
+		select h.id as hId,h.hus_name as hName,w.id as wId,w.wife_name as wName 
+		from t_hus as h left join t_wife as w on h.id = w.fk_hus_id 
+		<where>
+			h.id = #{id}
+		</where>
+	</select>
+
+	<delete id="deleteHusbandWithWifeByHusbandId">
+		delete from t_wife where fk_hus_id = #{id};
+		delete from t_hus where id = #{id}
+	</delete>
+
+	<select id="getHusbandByFkHusId" resultType="Husband">
+		select id as id,hus_name as name from t_hus where id = #{id}
+	</select>
+
+
+
+
+</mapper>

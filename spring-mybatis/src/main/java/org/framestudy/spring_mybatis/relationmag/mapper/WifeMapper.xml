@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.framestudy.spring_mybatis.relationmag.mapper.WifeMapper">
+	
+	
+	<resultMap type="Wife" id="wifeMap">
+		<id property="id" column="id" javaType="long"/>
+		<result property="name" column="wife_name" javaType="java.lang.String"/>
+		<!-- association 关联或关系 -->
+		<association property="hus" javaType="Husband" column="fk_hus_id" select="org.framestudy.spring_mybatis.relationmag.mapper.HusbandMapper.getHusbandByFkHusId"></association>
+	</resultMap>
+	
+	
+	
+	<select id="getWifeWithHusbandByWifeId" resultMap="wifeMap">
+		select * from t_wife where id = #{id}
+	</select>
+	
+</mapper>
