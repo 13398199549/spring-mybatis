@@ -28,9 +28,9 @@ public class TestUserService {
 	public void testBatchDeleteUserInfo(){
 		List<UserInfo> users = new ArrayList<UserInfo>();
 		UserInfo user = new UserInfo();
-		user.setId(13l);
+		user.setId(4l);
 		UserInfo user2 = new UserInfo();
-		user2.setId(14l);
+		user2.setId(7l);
 		users.add(user2);
 		users.add(user);
 		

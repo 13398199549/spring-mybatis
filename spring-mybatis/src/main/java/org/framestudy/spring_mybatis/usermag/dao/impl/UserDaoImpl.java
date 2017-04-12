@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.framestudy.spring_mybatis.usermag.beans.UserInfo;
 import org.framestudy.spring_mybatis.usermag.dao.IUserDao;
 import org.framestudy.spring_mybatis.usermag.mapper.UserMapper;
-import org.framestudy.spring_mybatis.utils.SessionUtils;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -15,155 +14,48 @@ public class UserDaoImpl implements IUserDao {
 
 	private UserMapper um;
 	
-	
+	public void setSession(SqlSession session) {
+		um = session.getMapper(UserMapper.class);//取得接口的实例
+	}
+
 	public int saveUserInfo(UserInfo user) {
 		// TODO Auto-generated method stub
-		SqlSession session = SessionUtils.getSession();//获得会话连接对象
-		um = session.getMapper(UserMapper.class);//取得接口的实例
-		int rows = 0;
-		try {
-			rows = um.saveUserInfo(user);
-			session.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			session.rollback();
-		}finally {
-			session.close();
-		}
-		
-		return rows;
+		return um.saveUserInfo(user);
 	}
 
 	public int updateUserInfo(UserInfo user) {
 		// TODO Auto-generated method stub
-		SqlSession session = SessionUtils.getSession();//获得会话连接对象
-		um = session.getMapper(UserMapper.class);//取得接口的实例
-		int rows = 0;
-		try {
-			rows = um.updateUserInfo(user);
-			session.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			session.rollback();
-		}finally {
-			session.close();
-		}
-		
-		return rows;
+		return um.updateUserInfo(user);
 	}
 
 	public int deleteUserInfo(Long id) {
 		// TODO Auto-generated method stub
-		SqlSession session = SessionUtils.getSession();//获得会话连接对象
-		um = session.getMapper(UserMapper.class);//取得接口的实例
-		int rows = 0;
-		try {
-			rows = um.deleteUserInfo(id);
-			session.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			session.rollback();
-		}finally {
-			session.close();
-		}
-		
-		return rows;
+		return um.deleteUserInfo(id);
 	}
 
 	public UserInfo getUserInfoById(Long id) {
 		// TODO Auto-generated method stub
-		SqlSession session = SessionUtils.getSession();//获得会话连接对象
-		um = session.getMapper(UserMapper.class);//取得接口的实例
-		UserInfo user = null;
-		try {
-			user = um.getUserInfoById(id);
-			session.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			session.rollback();
-		}finally {
-			session.close();
-		}
-		
-		return user;
+		return um.getUserInfoById(id);
 	}
 
 	public UserInfo getUserByLoginNameAndPwd(String loginName, String pwd) {
 		// TODO Auto-generated method stub
-		SqlSession session = SessionUtils.getSession();//获得会话连接对象
-		um = session.getMapper(UserMapper.class);//取得接口的实例
-		UserInfo user = null;
-		try {
-			user = um.getUserByLoginNameAndPwd(loginName,pwd);
-			session.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			session.rollback();
-		}finally {
-			session.close();
-		}
-		
-		return user;
+		return um.getUserByLoginNameAndPwd(loginName,pwd);
 	}
 
 	public List<UserInfo> queryUserListByMap(Map map) {
 		// TODO Auto-generated method stub
-		SqlSession session = SessionUtils.getSession();//获得会话连接对象
-		um = session.getMapper(UserMapper.class);//取得接口的实例
-		List<UserInfo> users = null;
-		
-		try {
-			users = um.queryUserListByMap(map);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}finally {
-			session.close();
-		}
-		return users;
+		return um.queryUserListByMap(map);
 	}
 	
 	public int batchSaveUserInfo(List<UserInfo> user) {
 		// TODO Auto-generated method stub
-		SqlSession session = SessionUtils.getSession();//获得会话连接对象
-		um = session.getMapper(UserMapper.class);//取得接口的实例
-		int rows = 0;
-		try {
-			rows = um.batchSaveUserInfo(user);
-			session.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			session.rollback();
-		}finally {
-			session.close();
-		}
-		
-		return rows;
+		return um.batchSaveUserInfo(user);
 	}
 
 	public int batchDeleteUserInfo(List<UserInfo> user) {
 		// TODO Auto-generated method stub
-		SqlSession session = SessionUtils.getSession();//获得会话连接对象
-		um = session.getMapper(UserMapper.class);//取得接口的实例
-		int rows = 0;
-		try {
-			rows = um.batchDeleteUserInfo(user);
-			session.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			session.rollback();
-		}finally {
-			session.close();
-		}
-		
-		return rows;
+		return um.batchDeleteUserInfo(user);
 	}
 
 }
