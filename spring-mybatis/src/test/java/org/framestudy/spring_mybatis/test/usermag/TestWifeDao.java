@@ -19,8 +19,9 @@ public class TestWifeDao {
 	@Test
 	public void testGetWifeWithHusbandByWifeId(){
 		Wife wife = wifeDaoImpl.getWifeWithHusbandByWifeId(2l);
-		System.out.println(wife);
+		System.out.println(wife.getId());
+		System.out.println(wife.getName());
+		
+//		System.out.println(wife.getHus());//延迟加载，不用则不会去主动查询数据库
 	}
-	
-	
 }

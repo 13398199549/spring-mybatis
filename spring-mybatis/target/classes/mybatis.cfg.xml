@@ -3,10 +3,13 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-
-
 	<settings>
 		<setting name="logImpl" value="LOG4J"/>
+		<!-- lazyLoadingEnabled 开启延迟加载 -->
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<!-- aggressiveLazyLoading 将关联对象加载方式修改为消极加载 -->
+		<setting name="aggressiveLazyLoading" value="false"/>
+		
 	</settings>
 	
 	<!-- 给类取类的别名 -->

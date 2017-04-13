@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.framestudy.spring_mybatis.relationmag.mapper.StudentMapper">
+	
+	<resultMap type="Students" id="stuMap">
+		<id property="id" column="id" javaType="long"/>
+		<result property="name" column="stu_name" javaType="java.lang.String"/>
+		<association property="cls" javaType="Classes" column="fk_cls_id" fetchType="lazy" select="getClassById"></association>
+	</resultMap>
+	
+	<select id="getStudentWithClassByStudentId" resultMap="stuMap">
+		select * from t_stus where id = #{id}	
+	</select>
+	
+	<select id="getClassById" resultType="Classes">
+		select id as id,cls_name as name from t_class where id = #{id}
+	</select>
+</mapper>

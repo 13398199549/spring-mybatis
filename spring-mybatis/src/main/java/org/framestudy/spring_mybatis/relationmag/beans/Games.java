@@ -1,29 +1,25 @@
 package org.framestudy.spring_mybatis.relationmag.beans;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class Wife implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1562524657481846903L;
+public class Games implements Serializable {
 
 	private Long id;
 	private String name;
 	
-	private Husband hus;
+	private List<Player> players;
 
-	public Wife() {
+	public Games() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Wife(Long id, String name, Husband hus) {
+	public Games(Long id, String name, List<Player> players) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.hus = hus;
+		this.players = players;
 	}
 
 	public Long getId() {
@@ -42,16 +38,18 @@ public class Wife implements Serializable {
 		this.name = name;
 	}
 
-	public Husband getHus() {
-		return hus;
+	public List<Player> getPlayers() {
+		return players;
 	}
 
-	public void setHus(Husband hus) {
-		this.hus = hus;
+	public void setPlayers(List<Player> players) {
+		this.players = players;
 	}
 
 	@Override
 	public String toString() {
-		return "Wife [id=" + id + ", name=" + name + "]";
+		return "Games [id=" + id + ", name=" + name + ", players=" + players + "]";
 	}
+	
+	
 }

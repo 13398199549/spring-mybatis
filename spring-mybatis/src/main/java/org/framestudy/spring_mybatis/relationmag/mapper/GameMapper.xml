@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.framestudy.spring_mybatis.relationmag.mapper.GameMapper">
+	
+	<select id="getAllGames" resultType="Games">
+		select id as id,game_name as name from t_game
+	</select>
+	
+	<select id="getGamesByPlayerId" resultType="Games">
+		select g.id as id,g.game_name as name from t_game as g left join t_player_game as pg on g.id = pg.fk_game_id where fk_player_id = #{id}
+	</select>
+
+</mapper>
