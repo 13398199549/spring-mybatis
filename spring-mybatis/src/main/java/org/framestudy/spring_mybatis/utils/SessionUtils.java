@@ -8,13 +8,19 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 /**
- * Session工具类，不需要记录
+ * Session连接工具类
  * @author Administrator
  *
  */
 public class SessionUtils {
 
 	private static SqlSessionFactory sf;
+	private static ThreadLocal<SqlSession> local = new ThreadLocal<SqlSession>(){
+		protected SqlSession initialValue() {
+			return sf.openSession();
+		};
+	};
+	
 	
 	static{
 		
@@ -29,6 +35,13 @@ public class SessionUtils {
 	}
 	
 	public static SqlSession getSession(){
-		return sf.openSession();
+		SqlSession session = local.get();
+		if(session != null){
+			return session;
+		}else{
+			session = sf.openSession();
+			local.set(session);
+		}
+		return session;
 	}
 }
